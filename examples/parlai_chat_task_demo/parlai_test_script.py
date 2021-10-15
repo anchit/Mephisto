@@ -20,7 +20,13 @@ from typing import List, Any
 
 TASK_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
-defaults = ["_self_", {"conf": "example"}]
+defaults = [
+    {"mephisto/blueprint": BLUEPRINT_TYPE},
+    {"mephisto/architect": "local"},
+    {"mephisto/provider": "mock"},
+    "conf/base",
+    {"conf": "example"},
+]
 
 from mephisto.operations.hydra_config import RunScriptConfig, register_script_config
 
