@@ -16,7 +16,7 @@ function OnboardingComponent({ onSubmit }) {
     <div>
       <Directions>
         <div><strong>Instructions</strong></div>
-      This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Here is an example
+      This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Here is an example please read the whole thing to avoid failing the qualification test
       </Directions>
       <div className="container">
           <p className="subtitle is-5"></p>
@@ -50,7 +50,7 @@ function OnboardingComponent({ onSubmit }) {
         </div>
         </div>
         <div>
-          <p className="subtitle is-4">Based on the instrtuctions which of the following is the best question to ask?</p>
+          <p className="subtitle is-4">Based on the instructions which of the following is the best question to ask?</p>
           <form>
           <div onChange={(event) => setTextValue(event.target.value)}>
             <div><input type="radio" value="0" name="answer" /> Who said “Well done”?</div>
