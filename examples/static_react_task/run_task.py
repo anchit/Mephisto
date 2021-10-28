@@ -18,6 +18,7 @@ import hydra
 from omegaconf import DictConfig
 from dataclasses import dataclass, field
 from typing import List, Any
+import json
 
 TASK_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 
@@ -70,11 +71,17 @@ def main(cfg: DictConfig) -> None:
     def onboarding_always_valid(onboarding_data):
         return True
 
+    import json
+
+    data_path = '/fsx/xwhan/data/QMSum/data/ALL/jsonl/mturk_train_10.json' # 10 turns per segments
+    # data_path = '/fsx/xwhan/data/QMSum/data/ALL/jsonl/mturk_train_5.json' 
+    raw_data = json.load(open(data_path))
+    # Bold the speaker name
+    for item in raw_data:
+       item['turns'] = ['<strong>' + turn.replace(':', ":</strong>")  for turn in item['turns'] ]
+
     shared_state = SharedStaticTaskState(
-        static_task_data=[
-            {"text": "This text is good text!"},
-            {"text": "This text is bad text!"},
-        ],
+        static_task_data=raw_data[:5],
         validate_onboarding=onboarding_always_valid,
     )
 

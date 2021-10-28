@@ -24,11 +24,12 @@ from typing import ClassVar, List, Type, Any, Dict, Iterable, Optional, TYPE_CHE
 
 if TYPE_CHECKING:
     from mephisto.data_model.task_run import TaskRun
-    from mephisto.data_model.blueprint import (
+    from mephisto.abstractions.blueprint import (
         AgentState,
         TaskRunner,
         TaskBuilder,
         SharedTaskState,
+        Blueprint
     )
     from mephisto.data_model.assignment import Assignment
     from mephisto.data_model.agent import OnboardingAgent
@@ -107,7 +108,7 @@ class StaticHTMLBlueprint(StaticBlueprint):
     @classmethod
     def assert_task_args(cls, args: DictConfig, shared_state: "SharedTaskState"):
         """Ensure that the data can be properly loaded"""
-        Blueprint.assert_task_args(args, shared_state)
+        StaticBlueprint.assert_task_args(args, shared_state)
         blue_args = args.blueprint
         if isinstance(shared_state.static_task_data, types.GeneratorType):
             raise AssertionError("You can't launch an HTML static task on a generator")

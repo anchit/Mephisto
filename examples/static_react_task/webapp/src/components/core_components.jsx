@@ -43,6 +43,7 @@ function Directions({ children }) {
 }
 
 function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
+  const [textValue, setTextValue] = React.useState("");
   if (!taskData) {
     return <LoadingScreen />;
   }
@@ -52,30 +53,54 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   return (
     <div>
       <Directions>
-        Directions: Please rate the below sentence as good or bad.
+        Directions: This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Make sure the question is answerable given the transcript section.
       </Directions>
       <section className="section">
         <div className="container">
           <p className="subtitle is-5"></p>
-          <p className="title is-3 is-spaced">{taskData.text}</p>
-          <div className="field is-grouped">
-            <div className="control">
-              <button
-                className="button is-success is-large"
-                onClick={() => onSubmit({ rating: "good" })}
-              >
-                Mark as Good
-              </button>
+          <p className="subtitle is-3 is-spaced"><strong>Topics discussed:</strong> {taskData.topic}</p>
+
+
+          <div class="columns">
+            <div class="column is-one-thirds">
+              <p className="subtitle is-3 is-spaced"><strong>Meeting summary:</strong></p>
+              <div class="content">{taskData.abstract}</div>
             </div>
-            <div className="control">
-              <button
-                className="button is-danger is-large"
-                onClick={() => onSubmit({ rating: "bad" })}
-              >
-                Mark as Bad
-              </button>
+
+
+            <div class="column is-two-thirds">
+              <p className="subtitle is-3 is-spaced"><strong>Meeting section:</strong></p>
+              {taskData.turns.map(turn => (
+                <div class="context" dangerouslySetInnerHTML={{ __html: turn }} />
+              ))}
+
             </div>
+
+
           </div>
+          <form>
+          <div class="field">
+            <label class="label">Question</label>
+            <div class="control">
+              <textarea class="textarea"
+                placeholder="Type your question here."
+                value={textValue}
+                onChange={(event) => setTextValue(event.target.value)}
+                // minLength={10}
+                // maxLength={200}
+                // required
+              ></textarea>
+            </div>
+            
+          </div>
+          <button
+            className="button is-success is-large"
+            onClick={() =>  onSubmit({ question: textValue })}
+            // disabled={}
+          >
+            Submit
+          </button>
+          </form>
         </div>
       </section>
     </div>
