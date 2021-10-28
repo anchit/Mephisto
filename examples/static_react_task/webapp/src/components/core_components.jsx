@@ -9,19 +9,66 @@
 import React from "react";
 
 function OnboardingComponent({ onSubmit }) {
+  const [textValue, setTextValue] = React.useState("");
+  const [isTime, setIsTimeValue] = React.useState(true);
+  setTimeout(() => setIsTimeValue(false), 15000); // 15s
   return (
     <div>
       <Directions>
-        This component only renders if you have chosen to assign an onboarding
-        qualification for your task. Click the button to move on to the main
-        task.
+        <div><strong>Instructions</strong></div>
+      This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Here is an example
       </Directions>
-      <button
+      <div className="container">
+          <p className="subtitle is-5"></p>
+          <p className="subtitle is-4 is-spaced"><strong>Topics discussed:</strong>Remote control prototype introduction</p>
+          <div class="columns">
+            <div class="column is-one-thirds">
+              <p className="subtitle is-4 is-spaced"><strong>Meeting summary:</strong></p>
+              <div class="content">The Project Manager reviewed the overall process for remote control design and key features. After that, User Interface introduced the prototype. The prototype was yellow like a banana with a simple quick on-off button.</div>
+            </div>
+            <div class="column is-two-thirds">
+              <p className="subtitle is-4 is-spaced"><strong>Meeting section:</strong></p>
+                <div class="context"><strong>Project Manager:</strong> Show it to us</div>
+                <div class="context"><strong>Industrial Designer:</strong> There you go . </div>
+                <div class="context"><strong>User Interface:</strong> It's you know it's flimsy 'cause it's made out of heavy Play-Doh ,</div>
+                <div class="context"><strong>Marketing:</strong> Pretty impressive .</div>
+                <div class="context"><strong>Project Manager:</strong> Well done .</div>
+            </div>
+          </div>
+        <div class="columns">
+        <div class="column is-half">
+          <p className="subtitle is-4 is-spaced">Example Good Question from the meeting segment</p>
+          <div class="context"><strong>What was the remote prototype made of?</strong></div>
+          <div class="context">This question takes in context from the summary i.e is asking about the remote prototype and the answer to this “Play-Doh” is present in the meeting segment</div>     
+        </div>
+        <div class="column is-half">
+          <p className="subtitle is-4 is-spaced">Example Bad Questions from the meeting segment</p>
+          <div class="context"><strong>Who said “Pretty impressive”?</strong></div>
+          <div class="context">We are looking for meaningful questions and not directly based on quotes from the meeting</div>  
+          <div class="context"><strong>What color was the prototype?</strong></div>
+          <div class="context">This question is not answerable from the meeting segment and needs extra information</div>    
+        </div>
+        </div>
+        <div>
+          <p className="subtitle is-4">Based on the instrtuctions which of the following is the best question to ask?</p>
+          <form>
+          <div onChange={(event) => setTextValue(event.target.value)}>
+            <div><input type="radio" value="0" name="answer" /> Who said “Well done”?</div>
+            <div><input type="radio" value="1" name="answer" /> Why was the remote prototype heavy?</div>
+            <div><input type="radio" value="2" name="answer" /> What device is the remote for?</div>
+            <div><input type="radio" value="3" name="answer" /> What color is the remote?</div>
+          </div>
+          <button
         className="button is-link"
-        onClick={() => onSubmit({ success: true })}
+        onClick={() => onSubmit({ answer: textValue })}
+        disabled={isTime||textValue==""}
       >
-        Move to main task.
+        Submit Answer to proceed
       </button>
+      </form>
+        </div>      
+        </div> 
+
     </div>
   );
 }
@@ -44,6 +91,9 @@ function Directions({ children }) {
 
 function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
+  const [isTime, setIsTimeValue] = React.useState(true);
+  setTimeout(() => setIsTimeValue(false), 5000); // 5s
+
   if (!taskData) {
     return <LoadingScreen />;
   }
@@ -75,8 +125,6 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
               ))}
 
             </div>
-
-
           </div>
           <form>
           <div class="field">
@@ -86,17 +134,13 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
                 placeholder="Type your question here."
                 value={textValue}
                 onChange={(event) => setTextValue(event.target.value)}
-                // minLength={10}
-                // maxLength={200}
-                // required
               ></textarea>
-            </div>
-            
+            </div>        
           </div>
           <button
             className="button is-success is-large"
             onClick={() =>  onSubmit({ question: textValue })}
-            // disabled={}
+            disabled={isTime||textValue.length<10}
           >
             Submit
           </button>

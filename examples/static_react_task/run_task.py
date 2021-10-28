@@ -69,7 +69,7 @@ def main(cfg: DictConfig) -> None:
     task_dir = cfg.task_dir
 
     def onboarding_always_valid(onboarding_data):
-        return True
+        return onboarding_data['outputs']['answer'] == "1"
 
     import json
 
