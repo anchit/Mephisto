@@ -21,25 +21,21 @@ function OnboardingComponent({ onSubmit }) {
 
       <div class="content">
 
-      <strong>Onboarding task instruction:</strong> This task requires you to ask questions about a short section of a meeting transcript. Apart from the section, you will also be given some general information about the meeting: the topics discussed in the meeting and the overall summary. Here is an example: please read the whole thing to avoid failing the qualification test.
+      <strong>Onboarding task instruction:</strong> This task requires you to ask questions about a short section of a meeting transcript. Apart from the section, you will also be given some general information about the meeting: the topics discussed in the meeting and the overall summary. <br /> Here is an example: please read the whole thing to avoid failing the qualification test.
 
-
-      <p className="subtitle"><strong>Tips to succeed the task:</strong></p>
-      <ul>
-        <li>Avoid trivial and un-informative questions.</li>
-        <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
-        <li>Make sure the answer is obvious from the meeting segment, <strong>NOT</strong> the summary.</li>
-      </ul>
       </div>
 
       </Directions>
+
+      
       <div className="container">
+        <section className="section">
           <p className="subtitle is-5"></p>
           <p className="subtitle is-4 is-spaced"><strong>Topics discussed: </strong>Remote control prototype introduction</p>
           <div class="columns">
             <div class="column is-half">
               <p className="subtitle is-4 is-spaced"><strong>Meeting summary:</strong></p>
-              <div class="content">The Project Manager reviewed the overall process for remote control design and key features. After that, User Interface introduced the prototype. The prototype was yellow like a banana with a simple quick on-off button.</div>
+              <div class="content"><blockquote>The Project Manager reviewed the overall process for remote control design and key features. After that, User Interface introduced the prototype. The prototype was yellow like a banana with a simple quick on-off button.</blockquote></div>
             </div>
             <div class="column is-half">
               <p className="subtitle is-4 is-spaced"><strong>Meeting section:</strong></p>
@@ -50,7 +46,15 @@ function OnboardingComponent({ onSubmit }) {
                 <div class="context"><strong>Project Manager:</strong> Well done .</div>
             </div>
           </div>
+          </section>
+
+
+        <div class="is-divider" data-content="Examples"></div>
+        
+
         <div class="columns">
+
+        
         <div class="column is-half">
           <p className="subtitle is-4 is-spaced">Example <strong><font color="green">GOOD</font></strong> Question from the meeting segment</p>
           <div class="context"><strong>What was the remote prototype made of?</strong></div>
@@ -64,9 +68,10 @@ function OnboardingComponent({ onSubmit }) {
           <div class="context">This question is not answerable from the meeting segment and needs extra information</div>    
         </div>
         </div>
+
+        <div class="is-divider" data-content="Examples"></div>
         <div>
           <p className="subtitle is-4">Based on the instructions which of the following is the best question to ask?</p>
-          {/* <form> */}
           <div onChange={(event) => setTextValue(event.target.value)}>
             <div><input type="radio" value="0" name="answer" /> Who said “Well done”?</div>
             <div><input type="radio" value="1" name="answer" /> Why was the remote prototype heavy?</div>
@@ -74,13 +79,12 @@ function OnboardingComponent({ onSubmit }) {
             <div><input type="radio" value="3" name="answer" /> What color is the remote?</div>
           </div>
           <button
-          className="button is-link"
-          onClick={() => onSubmit({ answer: textValue })}
-          disabled={isTime||textValue==""}
-        >
-          Submit Answer to proceed
-        </button>
-      {/* </form> */}
+        className="button is-link"
+        onClick={() => onSubmit({ answer: textValue })}
+        disabled={isTime||textValue==""}
+      >
+        Submit Answer to proceed
+      </button>
         </div>      
         </div> 
 
@@ -107,7 +111,7 @@ function Directions({ children }) {
 function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
-  setTimeout(() => setIsTimeValue(false), 5000); // 5s
+  setTimeout(() => setIsTimeValue(false), 15000); // 5s
 
   if (!taskData) {
     return <LoadingScreen />;
@@ -118,15 +122,19 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   return (
     <div>
       <Directions>
-      <div><strong>Instructions:</strong></div>: This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Make sure the question is answerable given the transcript section.
+      <div><strong>Instructions:</strong></div>This task requires you to ask <strong>meaningful</strong> questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Make sure the question is answerable given the transcript section.
 
-      <div><strong>Tips to succeed the task:</strong></div>
+
+      <div class="content">
+      <br /> 
+      <p className="subtitle"><strong>Tips to succeed the task:</strong></p>
 
       <ul>
         <li>Avoid trivial and un-informative questions.</li>
         <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
         <li>Make sure the answer is obvious from the meeting segment, <strong>NOT</strong> the summary.</li>
       </ul>
+      </div>
 
       </Directions>
       <section className="section">
@@ -136,13 +144,15 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
 
 
           <div class="columns">
-            <div class="column is-one-thirds">
+            <div class="column is-half">
+            
               <p className="subtitle is-3 is-spaced"><strong>Meeting summary:</strong></p>
-              <div class="content">{taskData.abstract}</div>
+              <div class="content"><blockquote>{taskData.abstract}</blockquote></div>
+              
             </div>
 
 
-            <div class="column is-two-thirds">
+            <div class="column is-half">
               <p className="subtitle is-3 is-spaced"><strong>Meeting section:</strong></p>
               {taskData.turns.map(turn => (
                 <div class="context" dangerouslySetInnerHTML={{ __html: turn }} />
@@ -150,7 +160,6 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
 
             </div>
           </div>
-          <form>
           <div class="field">
             <label class="label">Question</label>
             <div class="control">
@@ -168,7 +177,6 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
           >
             Submit
           </button>
-          </form>
         </div>
       </section>
     </div>

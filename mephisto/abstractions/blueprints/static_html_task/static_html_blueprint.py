@@ -10,6 +10,7 @@ from mephisto.abstractions.blueprints.abstract.static_task.static_blueprint impo
 )
 from dataclasses import dataclass, field
 from omegaconf import MISSING, DictConfig
+from mephisto.abstractions.blueprint import Blueprint
 from mephisto.abstractions.blueprints.static_html_task.static_html_task_builder import (
     StaticHTMLTaskBuilder,
 )
@@ -30,6 +31,9 @@ if TYPE_CHECKING:
         TaskBuilder,
         SharedTaskState,
         Blueprint
+    )
+    from mephisto.abstractions.blueprints.abstract.static_task.static_blueprint import (
+        SharedStaticTaskState,
     )
     from mephisto.data_model.assignment import Assignment
     from mephisto.data_model.agent import OnboardingAgent
@@ -84,8 +88,14 @@ class StaticHTMLBlueprint(StaticBlueprint):
     BLUEPRINT_TYPE = BLUEPRINT_TYPE
 
     def __init__(
-        self, task_run: "TaskRun", args: "DictConfig", shared_state: "SharedTaskState"
+        self,
+        task_run: "TaskRun",
+        args: "DictConfig",
+        shared_state: "SharedTaskState",
     ):
+        assert isinstance(
+            shared_state, SharedStaticTaskState
+        ), "Cannot initialize with a non-static state"
         super().__init__(task_run, args, shared_state)
         self.html_file = os.path.expanduser(args.blueprint.task_source)
         if not os.path.exists(self.html_file):
@@ -110,6 +120,9 @@ class StaticHTMLBlueprint(StaticBlueprint):
         """Ensure that the data can be properly loaded"""
         StaticBlueprint.assert_task_args(args, shared_state)
         blue_args = args.blueprint
+        assert isinstance(
+            shared_state, SharedStaticTaskState
+        ), "Cannot assert args on a non-static state"
         if isinstance(shared_state.static_task_data, types.GeneratorType):
             raise AssertionError("You can't launch an HTML static task on a generator")
         if blue_args.get("data_csv", None) is not None:
@@ -129,7 +142,7 @@ class StaticHTMLBlueprint(StaticBlueprint):
             ), f"Provided JSON-L file {jsonl_file} doesn't exist"
         elif shared_state.static_task_data is not None:
             assert (
-                len(shared_state.static_task_data) > 0
+                len([w for w in shared_state.static_task_data]) > 0
             ), "Length of data dict provided was 0"
         else:
             raise AssertionError(
