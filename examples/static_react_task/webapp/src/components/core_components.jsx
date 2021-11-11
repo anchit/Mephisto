@@ -66,7 +66,6 @@ function OnboardingComponent({ onSubmit }) {
         </div>
         <div>
           <p className="subtitle is-4">Based on the instructions which of the following is the best question to ask?</p>
-          <form>
           <div onChange={(event) => setTextValue(event.target.value)}>
             <div><input type="radio" value="0" name="answer" /> Who said “Well done”?</div>
             <div><input type="radio" value="1" name="answer" /> Why was the remote prototype heavy?</div>
@@ -80,7 +79,6 @@ function OnboardingComponent({ onSubmit }) {
       >
         Submit Answer to proceed
       </button>
-      </form>
         </div>      
         </div> 
 
@@ -107,7 +105,7 @@ function Directions({ children }) {
 function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
-  setTimeout(() => setIsTimeValue(false), 5000); // 5s
+  setTimeout(() => setIsTimeValue(false), 15000); // 5s
 
   if (!taskData) {
     return <LoadingScreen />;
@@ -123,8 +121,8 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
       <div><strong>Tips to succeed the task:</strong></div>
 
       <ul>
-        <li>Avoid trivial and un-informative questions.</li>
         <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
+        <li>Avoid trivial and un-informative questions.</li>
         <li>Make sure the answer is obvious from the meeting segment, <strong>NOT</strong> the summary.</li>
       </ul>
 
@@ -150,7 +148,6 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
 
             </div>
           </div>
-          <form>
           <div class="field">
             <label class="label">Question</label>
             <div class="control">
@@ -168,7 +165,6 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
           >
             Submit
           </button>
-          </form>
         </div>
       </section>
     </div>
