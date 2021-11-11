@@ -42,10 +42,10 @@ function MainApp() {
       <section className="hero is-medium is-link">
         <div class="hero-body">
           <div className="title is-3">
-            This is an incredibly simple React task working with Mephisto!
+            This task is about question answering over meetings!
           </div>
           <div className="subtitle is-4">
-            Inside you'll be asked to rate a given sentence as good or bad.
+            Inside you'll be asked to write a question and answer pair after reading a meeting segment.
           </div>
         </div>
       </section>

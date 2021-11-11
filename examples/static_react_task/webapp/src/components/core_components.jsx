@@ -14,19 +14,34 @@ function OnboardingComponent({ onSubmit }) {
   setTimeout(() => setIsTimeValue(false), 15000); // 15s
   return (
     <div>
+
+      
       <Directions>
-        <div><strong>Instructions</strong></div>
-      This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Here is an example please read the whole thing to avoid failing the qualification test
+      <p className="subtitle"><strong>This task is about Q&A over meetings. </strong></p>
+
+      <div class="content">
+
+      <strong>Onboarding task instruction:</strong> This task requires you to ask questions about a short section of a meeting transcript. Apart from the section, you will also be given some general information about the meeting: the topics discussed in the meeting and the overall summary. Here is an example: please read the whole thing to avoid failing the qualification test.
+
+
+      <p className="subtitle"><strong>Tips to succeed the task:</strong></p>
+      <ul>
+        <li>Avoid trivial and un-informative questions.</li>
+        <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
+        <li>Make sure the answer is obvious from the meeting segment, <strong>NOT</strong> the summary.</li>
+      </ul>
+      </div>
+
       </Directions>
       <div className="container">
           <p className="subtitle is-5"></p>
-          <p className="subtitle is-4 is-spaced"><strong>Topics discussed:</strong>Remote control prototype introduction</p>
+          <p className="subtitle is-4 is-spaced"><strong>Topics discussed: </strong>Remote control prototype introduction</p>
           <div class="columns">
-            <div class="column is-one-thirds">
+            <div class="column is-half">
               <p className="subtitle is-4 is-spaced"><strong>Meeting summary:</strong></p>
               <div class="content">The Project Manager reviewed the overall process for remote control design and key features. After that, User Interface introduced the prototype. The prototype was yellow like a banana with a simple quick on-off button.</div>
             </div>
-            <div class="column is-two-thirds">
+            <div class="column is-half">
               <p className="subtitle is-4 is-spaced"><strong>Meeting section:</strong></p>
                 <div class="context"><strong>Project Manager:</strong> Show it to us</div>
                 <div class="context"><strong>Industrial Designer:</strong> There you go . </div>
@@ -37,12 +52,12 @@ function OnboardingComponent({ onSubmit }) {
           </div>
         <div class="columns">
         <div class="column is-half">
-          <p className="subtitle is-4 is-spaced">Example Good Question from the meeting segment</p>
+          <p className="subtitle is-4 is-spaced">Example <strong><font color="green">GOOD</font></strong> Question from the meeting segment</p>
           <div class="context"><strong>What was the remote prototype made of?</strong></div>
           <div class="context">This question takes in context from the summary i.e is asking about the remote prototype and the answer to this “Play-Doh” is present in the meeting segment</div>     
         </div>
         <div class="column is-half">
-          <p className="subtitle is-4 is-spaced">Example Bad Questions from the meeting segment</p>
+          <p className="subtitle is-4 is-spaced">Example <strong><font color="red">BAD</font></strong> Questions from the meeting segment</p>
           <div class="context"><strong>Who said “Pretty impressive”?</strong></div>
           <div class="context">We are looking for meaningful questions and not directly based on quotes from the meeting</div>  
           <div class="context"><strong>What color was the prototype?</strong></div>
@@ -103,7 +118,16 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   return (
     <div>
       <Directions>
-        Directions: This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Make sure the question is answerable given the transcript section.
+      <div><strong>Instructions:</strong></div>: This task requires you to ask questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Make sure the question is answerable given the transcript section.
+
+      <div><strong>Tips to succeed the task:</strong></div>
+
+      <ul>
+        <li>Avoid trivial and un-informative questions.</li>
+        <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
+        <li>Make sure the answer is obvious from the meeting segment, <strong>NOT</strong> the summary.</li>
+      </ul>
+
       </Directions>
       <section className="section">
         <div className="container">
