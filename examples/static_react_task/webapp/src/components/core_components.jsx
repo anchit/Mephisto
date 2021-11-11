@@ -66,7 +66,7 @@ function OnboardingComponent({ onSubmit }) {
         </div>
         <div>
           <p className="subtitle is-4">Based on the instructions which of the following is the best question to ask?</p>
-          <form>
+          {/* <form> */}
           <div onChange={(event) => setTextValue(event.target.value)}>
             <div><input type="radio" value="0" name="answer" /> Who said “Well done”?</div>
             <div><input type="radio" value="1" name="answer" /> Why was the remote prototype heavy?</div>
@@ -74,13 +74,13 @@ function OnboardingComponent({ onSubmit }) {
             <div><input type="radio" value="3" name="answer" /> What color is the remote?</div>
           </div>
           <button
-        className="button is-link"
-        onClick={() => onSubmit({ answer: textValue })}
-        disabled={isTime||textValue==""}
-      >
-        Submit Answer to proceed
-      </button>
-      </form>
+          className="button is-link"
+          onClick={() => onSubmit({ answer: textValue })}
+          disabled={isTime||textValue==""}
+        >
+          Submit Answer to proceed
+        </button>
+      {/* </form> */}
         </div>      
         </div> 
 

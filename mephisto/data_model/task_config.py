@@ -91,6 +91,13 @@ class TaskConfigArgs:
         },
     )
 
+    data_dir: Optional[str] = field(
+        default=MISSING,
+        metadata={
+            "help": "where are the input data"
+        },
+    )
+
 
 class TaskConfig:
     """

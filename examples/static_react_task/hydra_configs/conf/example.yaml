@@ -12,7 +12,8 @@ mephisto:
     onboarding_qualification: test-react-static-qualification
   task:
     task_name: react-static-task-example
-    task_title: "Rating a sentence as good or bad"
-    task_description: "In this task, you'll be given a sentence. It is your job to rate it as either good or bad."
+    task_title: "Q&A about meetings"
+    task_description: "In this task, you'll be given a meeting segment and you are required to create question and answer pairs ."
     task_reward: 0.05
     task_tags: "test,simple,button"
+    data_dir: /Users/xwhan/repos/Mephisto/data/QMSum/data/ALL/jsonl/

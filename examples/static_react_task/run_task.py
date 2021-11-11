@@ -32,7 +32,6 @@ class TestScriptConfig(RunScriptConfig):
     defaults: List[Any] = field(default_factory=lambda: defaults)
     task_dir: str = TASK_DIRECTORY
 
-
 register_script_config(name="scriptconfig", module=TestScriptConfig)
 
 
@@ -63,19 +62,105 @@ def build_task(task_dir):
         )
     os.chdir(return_dir)
 
+import os
+import json
+def load_data(data_dir):
+    all_data = []
+    for file in os.listdir(data_dir):
+        full_path = os.path.join(data_dir, file)
+        if not full_path.endswith('jsonl'):
+            continue
+        with open(full_path) as f:
+
+            for line in f:
+                all_data.append(json.loads(line))
+
+    def clean_data(text):
+        text = text.replace('{ vocalsound } ', '')
+        text = text.replace('{ vocalsound }', '')
+        text = text.replace('{ disfmarker } ', '')
+        text = text.replace('{ disfmarker } ', '')
+        text = text.replace('{disfmarker}', '')
+        text = text.replace("{vocalsound}", '')
+        text = text.replace('a_m_i_', 'ami')
+        text = text.replace('l_c_d_', 'lcd')
+        text = text.replace('p_m_s', 'pms')
+        text = text.replace('t_v_', 'tv')
+        text = text.replace('{ pause } ', '')
+        text = text.replace('{pause}', '')
+        text = text.replace('{ nonvocalsound } ', '')
+        text = text.replace('{nonvocalsound}', '')
+        text = text.replace('{ gap } ', '')
+        text = text.replace('{gap}', '')
+        return text
+
+    data_mturk = []
+    min_turns_per_segment = 2
+    max_turns_per_segment = 10
+    max_words_per_segment = 1000
+    min_words_per_segment = 200
+
+    for item in all_data:
+        turns = item['meeting_transcripts']
+        turns_formatted = [turn['speaker'] + ': ' + clean_data(turn['content']) for turn in turns]
+        # assert len(item['general_query_list']) == 1, item['general_query_list']
+        overall_summ = item['general_query_list'][0]['answer']
+
+        for topic_seg in item['topic_list']:
+            topic = topic_seg['topic']
+            for span in topic_seg['relevant_text_span']:
+                start, end = int(span[0]), int(span[1])
+
+                curr_segment, curr_word_cnt = [], 0
+                for turn_idx in range(start, end + 1):
+                    
+                    single_turn = turns_formatted[turn_idx]
+
+                    # skip empty turn
+                    if len(single_turn.split(': ')[1].strip()) == 0:
+                        continue
+
+                    # exceed token limits or exceed turn limits
+                    if (curr_word_cnt + len(single_turn.split()) > max_words_per_segment and len(curr_segment) >= min_turns_per_segment) \
+                        or (len(curr_segment) + 1 > max_turns_per_segment and curr_word_cnt >= min_words_per_segment):
+                        data_mturk.append(
+                            {
+                                'abstract': overall_summ,
+                                'turns':  curr_segment,
+                                'topic': topic
+                            }
+                        )
+
+                        curr_segment = [single_turn]
+                        curr_word_cnt = len(single_turn.split())
+                        continue 
+                    
+                    curr_segment.append(single_turn)
+                    curr_word_cnt += len(single_turn.split())
+
+                if curr_segment:
+                    data_mturk.append(
+                        {
+                            'abstract': overall_summ,
+                            'turns':  curr_segment,
+                            'topic': topic
+                        }
+                    )
+    return data_mturk
+
 
 @hydra.main(config_path="hydra_configs", config_name="scriptconfig")
 def main(cfg: DictConfig) -> None:
-    task_dir = cfg.task_dir
+
+
+
+    data_dir = cfg.mephisto.task.data_dir
+
+    raw_data = load_data(data_dir)
 
     def onboarding_always_valid(onboarding_data):
         return onboarding_data['outputs']['answer'] == "1"
 
-    import json
-
-    data_path = '/fsx/xwhan/data/QMSum/data/ALL/jsonl/mturk_train_10.json' # 10 turns per segments
-    # data_path = '/fsx/xwhan/data/QMSum/data/ALL/jsonl/mturk_train_5.json' 
-    raw_data = json.load(open(data_path))
     # Bold the speaker name
     for item in raw_data:
        item['turns'] = ['<strong>' + turn.replace(':', ":</strong>")  for turn in item['turns'] ]
@@ -85,7 +170,7 @@ def main(cfg: DictConfig) -> None:
         validate_onboarding=onboarding_always_valid,
     )
 
-    build_task(task_dir)
+    build_task(cfg.task_dir)
 
     db, cfg = load_db_and_process_config(cfg)
     operator = Operator(db)
