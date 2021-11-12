@@ -96,8 +96,8 @@ def load_data(data_dir):
 
     data_mturk = []
     min_turns_per_segment = 2
-    max_turns_per_segment = 8
-    max_words_per_segment = 800
+    max_turns_per_segment = 7
+    max_words_per_segment = 500
     min_words_per_segment = 200
 
     for item in all_data:
@@ -166,7 +166,7 @@ def main(cfg: DictConfig) -> None:
        item['turns'] = ['<strong>' + turn.replace(':', ":</strong>")  for turn in item['turns'] ]
 
     shared_state = SharedStaticTaskState(
-        static_task_data=raw_data[:5],
+        static_task_data=raw_data[:200],
         validate_onboarding=onboarding_always_valid,
     )
 

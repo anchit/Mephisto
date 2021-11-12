@@ -13,6 +13,7 @@ mephisto:
     task_name: react-static-task-example
     task_title: "Meeting question answering"
     task_description: "Inside you'll be asked to write a question and answer pair after reading a meeting segment."
-    task_reward: 0.05
+    task_reward: 0.25
     task_tags: "test,simple,button"
-    data_dir: /Users/xwhan/repos/Mephisto/data/QMSum/data/ALL/jsonl/
+    data_dir: /private/home/anchit/QMSum/
+    maximum_units_per_worker: 20

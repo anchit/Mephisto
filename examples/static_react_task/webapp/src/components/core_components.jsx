@@ -11,7 +11,7 @@ import React from "react";
 function OnboardingComponent({ onSubmit }) {
   const [textValue, setTextValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
-  setTimeout(() => setIsTimeValue(false), 15000); // 15s
+  setTimeout(() => setIsTimeValue(false), 25000); // 15s
   return (
     <div>
 
@@ -110,8 +110,11 @@ function Directions({ children }) {
 
 function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
+  const [answerValue, setAnswerValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
-  setTimeout(() => setIsTimeValue(false), 15000); // 5s
+  const meetingSection = React.useState(taskData.full_section)
+  console.log(meetingSection);
+  setTimeout(() => setIsTimeValue(false),45000); // 45s
 
   if (!taskData) {
     return <LoadingScreen />;
@@ -124,24 +127,20 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
       <Directions>
       <div><strong>Instructions:</strong></div>This task requires you to ask <strong>meaningful</strong> questions about a short section of a meeting transcript. Besides the section, you will also be shown the topics discussed in the meeting and overall summary. Make sure the question is answerable given the transcript section.
 
-
       <div class="content">
       <br /> 
-      <p className="subtitle"><strong>Tips to succeed the task:</strong></p>
-
+      <p className="subtitle"><strong>Tips to not get work <font color="red">rejected</font>:</strong></p>
       <ul>
         <li>Avoid trivial and un-informative questions.</li>
         <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
-        <li>Make sure the answer is obvious from the meeting segment, <strong>NOT</strong> the summary.</li>
+        <li>Make sure the answer is <strong>SHORT</strong> and obvious from the meeting section</li>
       </ul>
       </div>
-
       </Directions>
       <section className="section">
         <div className="container">
           <p className="subtitle is-5"></p>
           <p className="subtitle is-3 is-spaced"><strong>Topics discussed:</strong> {taskData.topic}</p>
-
 
           <div class="columns">
             <div class="column is-half">
@@ -160,20 +159,32 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
 
             </div>
           </div>
-          <div class="field">
+          <div class="columns">
+          <div class="field column-is-two-thirds" >
             <label class="label">Question</label>
             <div class="control">
               <textarea class="textarea"
-                placeholder="Type your question here."
+                placeholder="Type your question here"
                 value={textValue}
                 onChange={(event) => setTextValue(event.target.value)}
               ></textarea>
             </div>        
           </div>
+          <div class="field column-is-one-third">
+            <label class="label">Answer</label>
+            <div class="control">
+              <textarea class="textarea"
+                placeholder="Copy paste the answer from the meeting section"
+                value={answerValue}
+                onChange={(event) => setAnswerValue(event.target.value)}
+              ></textarea>
+            </div>        
+          </div>
+          </div>
           <button
             className="button is-success is-large"
-            onClick={() =>  onSubmit({ question: textValue })}
-            disabled={isTime||textValue.length<10}
+            onClick={() =>  onSubmit({ question: textValue, answer: answerValue})}
+            disabled={isTime||textValue.length<10||answerValue.length<3||textValue.length>150||answerValue.length>100}
           >
             Submit
           </button>
