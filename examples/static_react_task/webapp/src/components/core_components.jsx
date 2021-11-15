@@ -112,9 +112,7 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
   const [answerValue, setAnswerValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
-  const meetingSection = React.useState(taskData.full_section)
-  console.log(meetingSection);
-  setTimeout(() => setIsTimeValue(false),45000); // 45s
+  setTimeout(() => setIsTimeValue(false), 45000); // 45s
 
   if (!taskData) {
     return <LoadingScreen />;
@@ -184,7 +182,7 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
           <button
             className="button is-success is-large"
             onClick={() =>  onSubmit({ question: textValue, answer: answerValue})}
-            disabled={isTime||textValue.length<10||answerValue.length<3||textValue.length>150||answerValue.length>100}
+            disabled={isTime||textValue.length<10||answerValue.length<3||textValue.length>150||answerValue.length>100|| taskData.section.includes(textValue)||(!taskData.section.includes(answerValue))}
           >
             Submit
           </button>

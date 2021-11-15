@@ -127,7 +127,8 @@ def load_data(data_dir):
                             {
                                 'abstract': overall_summ,
                                 'turns':  curr_segment,
-                                'topic': topic
+                                'topic': topic,
+                                'section': ' '.join(curr_segment)
                             }
                         )
 
@@ -143,7 +144,8 @@ def load_data(data_dir):
                         {
                             'abstract': overall_summ,
                             'turns':  curr_segment,
-                            'topic': topic
+                            'topic': topic,
+                            'section': ' '.join(curr_segment)
                         }
                     )
     return data_mturk
@@ -151,7 +153,6 @@ def load_data(data_dir):
 
 @hydra.main(config_path="hydra_configs", config_name="scriptconfig")
 def main(cfg: DictConfig) -> None:
-
 
 
     data_dir = cfg.mephisto.task.data_dir
