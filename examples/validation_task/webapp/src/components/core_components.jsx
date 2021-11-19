@@ -9,22 +9,24 @@
 import React from "react";
 
 function OnboardingComponent({ onSubmit }) {
-  const [textValue, setTextValue] = React.useState("");
+  const [q1Value, setQ1Value] = React.useState("");
+  const [q2Value, setQ2Value] = React.useState("");
+  const [q3Value, setQ3Value] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
   setTimeout(() => setIsTimeValue(false), 25000); // 15s
   return (
     <div>
-
-      
       <Directions>
-      <p className="subtitle"><strong>This task is about Q&A over meetings. </strong></p>
-
       <div class="content">
-
-      <strong>Onboarding task instruction:</strong> This task requires you to ask questions about a short section of a meeting transcript. Apart from the section, you will also be given some general information about the meeting: the topics discussed in the meeting and the overall summary. <br /> Here is an example: please read the whole thing to avoid failing the qualification test.
-
+      <p className="subtitle"><strong>Task Guidelines:</strong></p>
+      <ul>
+        <li>This task requires you to rate the quality of a question, answer pair about a short section of a meeting.</li>
+        <li>Imagine you are trying to find useful information from certain topics in the meeting through question answering</li>
+        <li>Read the meeting summary and secttion</li>
+        <li>First evaluate if the question is related to the meeting section and is asking for useful information</li>
+        <li>Then check if the provided answer to the question is correct</li>
+      </ul>
       </div>
-
       </Directions>
 
       
@@ -57,31 +59,44 @@ function OnboardingComponent({ onSubmit }) {
         
         <div class="column is-half">
           <p className="subtitle is-4 is-spaced">Example <strong><font color="green">GOOD</font></strong> Question from the meeting segment</p>
-          <div class="context"><strong>What was the remote prototype made of?</strong></div>
-          <div class="context">This question takes in context from the summary i.e is asking about the remote prototype and the answer to this “Play-Doh” is present in the meeting segment</div>     
+          <div class="context"><strong>Question: What was the remote prototype made of? Answer: Play-Doh </strong></div>
+          <div class="context">This question is about the meeting section asking for useful information and the answer is correct </div>     
         </div>
         <div class="column is-half">
           <p className="subtitle is-4 is-spaced">Example <strong><font color="red">BAD</font></strong> Questions from the meeting segment</p>
-          <div class="context"><strong>Who said “Pretty impressive”?</strong></div>
-          <div class="context">We are looking for meaningful questions and not directly based on quotes from the meeting</div>  
-          <div class="context"><strong>What color was the prototype?</strong></div>
-          <div class="context">This question is not answerable from the meeting segment and needs extra information</div>    
+          <div class="context"><strong>Question: Who said “Pretty impressive”? Answer: Marketing</strong></div>
+          <div class="context">We are looking for meaningful questions and not directly based on quotes from the meeting</div>     
         </div>
         </div>
 
-        <div class="is-divider" data-content="Examples"></div>
+        <div class="is-divider" data-content="Test your understanding to proceed"></div>
         <div>
-          <p className="subtitle is-4">Based on the instructions which of the following is the best question to ask?</p>
-          <div onChange={(event) => setTextValue(event.target.value)}>
-            <div><input type="radio" value="0" name="answer" /> Who said “Well done”?</div>
-            <div><input type="radio" value="1" name="answer" /> Why was the remote prototype heavy?</div>
-            <div><input type="radio" value="2" name="answer" /> What device is the remote for?</div>
-            <div><input type="radio" value="3" name="answer" /> What color is the remote?</div>
+          <p className="subtitle is-4">Q: Is the content technical? A: Yes </p>
+          <div onChange={(event) => setQ2Value(event.target.value)}>
+            <div><input type="radio" value="0" name="q2" />The question is not meaningful</div>
+            <div><input type="radio" value="1" name="q2" />The question is meaningful but the answer is wrong</div>
+            <div><input type="radio" value="2" name="q2" />The question is meaningful and the answer is correct</div>
+          </div>
+        </div> 
+        <div>
+          <p className="subtitle is-4">Q: Why was the remote prototype heavy? A: cause it's made out of heavy Play-Doh </p>
+          <div onChange={(event) => setQ1Value(event.target.value)}>
+            <div><input type="radio" value="0" name="q1" />The question is not meaningful</div>
+            <div><input type="radio" value="1" name="q1" />The question is meaningful but the answer is wrong</div>
+            <div><input type="radio" value="2" name="q1" />The question is meaningful and the answer is correct</div>
+          </div>
+        </div>  
+        <div>
+          <p className="subtitle is-4">Q: What color is the remote? A: Play-Doh </p>
+          <div onChange={(event) => setQ3Value(event.target.value)}>
+            <div><input type="radio" value="0" name="q3" />The question is not meaningful</div>
+            <div><input type="radio" value="1" name="q3" />The question is meaningful but the answer is wrong</div>
+            <div><input type="radio" value="2" name="q3" />The question is meaningful and the answer is correct</div>
           </div>
           <button
         className="button is-link"
-        onClick={() => onSubmit({ answer: textValue })}
-        disabled={isTime||textValue==""}
+        onClick={() => onSubmit({ answer: [q1Value, q2Value, q3Value] })}
+        disabled={isTime||q1Value==""||q2Value==""||q3Value==""}
       >
         Submit Answer to proceed
       </button>
@@ -110,7 +125,6 @@ function Directions({ children }) {
 
 function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
-  const [answerValue, setAnswerValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
   setTimeout(() => setIsTimeValue(false), 60000); // 45s
 
@@ -123,21 +137,20 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   return (
     <div>
       <Directions>
-      <div><strong>Instructions:</strong></div>This task requires you to ask <strong>meaningful</strong> questions about a section of a meeting transcript. Besides the section, you will also be shown the topic discussed in the meeting and summary.
+      <div><strong>Instructions:</strong></div>This task requires you to ask rate question, answers about a section of a meeting transcript. Besides the section, you will also be shown the topic discussed in the meeting and summary.
 
       <div class="content">
       <br /> 
       <p className="subtitle"><strong>Tips to not get work <font color="red">rejected</font>:</strong></p>
       <ul>
-        <li>Read the whole text first and avoid trivial and un-informative questions.</li>
+        <li>Read the whole summary and section first to understand the context</li>
         <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
-        <li>Make sure the answer is <strong>SHORT</strong> and present in the meeting section</li>
+        <li>Rate the quality of the question and check if the answer is correct</li>
       </ul>
       </div>
       </Directions>
       <section className="section">
         <div className="container">
-          <p className="subtitle is-5"></p>
           <p className="subtitle is-3 is-spaced"><strong>Topics discussed:</strong> {taskData.topic}</p>
 
           <div class="columns">
@@ -148,41 +161,30 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
               
             </div>
 
-
             <div class="column is-half">
               <p className="subtitle is-3 is-spaced"><strong>Meeting section:</strong></p>
               {taskData.turns.map(turn => (
                 <div class="context" dangerouslySetInnerHTML={{ __html: turn }} />
               ))}
-
             </div>
           </div>
-          <div class="columns">
-          <div class="field column-is-two-thirds" >
-            <label class="label">Question</label>
-            <div class="control">
-              <textarea class="textarea"
-                placeholder="Type your question here"
-                value={textValue}
-                onChange={(event) => setTextValue(event.target.value)}
-              ></textarea>
-            </div>        
+          <div class='is-size-4'>
+          <strong>Question: </strong> {taskData.question}
           </div>
-          <div class="field column-is-one-third">
-            <label class="label">Answer</label>
-            <div class="control">
-              <textarea class="textarea"
-                placeholder="Copy paste the answer from the meeting section"
-                value={answerValue}
-                onChange={(event) => setAnswerValue(event.target.value)}
-              ></textarea>
-            </div>        
+          <div class='is-size-4'>
+          <strong>Answer: </strong> {taskData.answer}
           </div>
+          <section className="section">
+          <div onChange={(event) => setTextValue(event.target.value)}>
+            <div><input type="radio" value="0" name="rating" />The question is not meaningful</div>
+            <div><input type="radio" value="1" name="rating" />The question is meaningful but the answer is wrong</div>
+            <div><input type="radio" value="2" name="rating" />The question is meaningful and the answer is correct</div>
           </div>
+          </section>
           <button
             className="button is-success is-large"
-            onClick={() =>  onSubmit({ question: textValue, answer: answerValue})}
-            disabled={isTime||textValue.length<10||(!textValue.includes('?'))||answerValue.length<4||textValue.length>150||answerValue.length>100|| taskData.section.includes(textValue)||(!taskData.section.includes(answerValue))}
+            onClick={() =>  onSubmit({ rating: textValue})}
+            disabled={isTime||textValue==""}
           >
             Submit
           </button>
