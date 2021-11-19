@@ -31,15 +31,11 @@ function OnboardingComponent({ onSubmit }) {
 
       
       <div className="container">
-        <section className="section">
+        <section class="mt-2">
           <p className="subtitle is-5"></p>
-          <p className="subtitle is-4 is-spaced"><strong>Topics discussed: </strong>Remote control prototype introduction</p>
+          <p className="subtitle is-4 is-spaced"><strong>Topics discussed: </strong>Remote control prototype design and key features</p>
           <div class="columns">
-            <div class="column is-half">
-              <p className="subtitle is-4 is-spaced"><strong>Meeting summary:</strong></p>
-              <div class="content"><blockquote>The Project Manager reviewed the overall process for remote control design and key features. After that, User Interface introduced the prototype. The prototype was yellow like a banana with a simple quick on-off button.</blockquote></div>
-            </div>
-            <div class="column is-half">
+            <div class="column is-two-thirds">
               <p className="subtitle is-4 is-spaced"><strong>Meeting section:</strong></p>
                 <div class="context"><strong>Project Manager:</strong> Show it to us</div>
                 <div class="context"><strong>Industrial Designer:</strong> There you go . </div>
@@ -65,29 +61,30 @@ function OnboardingComponent({ onSubmit }) {
         <div class="column is-half">
           <p className="subtitle is-4 is-spaced">Example <strong><font color="red">BAD</font></strong> Questions from the meeting segment</p>
           <div class="context"><strong>Question: Who said “Pretty impressive”? Answer: Marketing</strong></div>
-          <div class="context">We are looking for meaningful questions and not directly based on quotes from the meeting</div>     
+          <div class="context">We are looking for meaningful questions that someone might ask later to find important information discussed</div>     
         </div>
         </div>
 
         <div class="is-divider" data-content="Test your understanding to proceed"></div>
-        <div>
-          <p className="subtitle is-4">Q: Is the content technical? A: Yes </p>
+        <p className="subtitle is-4 is-spaced"><strong>Test your understanding to proceed to HITs</strong></p>
+        <section class="mt-2">
+          <span className="subtitle is-4 is-spaced">Q: Is the content technical? A: Yes </span>
           <div onChange={(event) => setQ2Value(event.target.value)}>
             <div><input type="radio" value="0" name="q2" />The question is not meaningful</div>
             <div><input type="radio" value="1" name="q2" />The question is meaningful but the answer is wrong</div>
             <div><input type="radio" value="2" name="q2" />The question is meaningful and the answer is correct</div>
           </div>
-        </div> 
-        <div>
-          <p className="subtitle is-4">Q: Why was the remote prototype heavy? A: cause it's made out of heavy Play-Doh </p>
+        </section> 
+        <section class="mt-4">
+          <span className="subtitle is-4 is-spaced">Q: Why was the remote prototype heavy? A: cause it's made out of heavy Play-Doh </span>
           <div onChange={(event) => setQ1Value(event.target.value)}>
             <div><input type="radio" value="0" name="q1" />The question is not meaningful</div>
             <div><input type="radio" value="1" name="q1" />The question is meaningful but the answer is wrong</div>
             <div><input type="radio" value="2" name="q1" />The question is meaningful and the answer is correct</div>
           </div>
-        </div>  
-        <div>
-          <p className="subtitle is-4">Q: What color is the remote? A: Play-Doh </p>
+        </section>  
+        <section class="mt-4">
+          <span className="subtitle is-4 is-spaced">Q: What color is the remote? A: Play-Doh </span>
           <div onChange={(event) => setQ3Value(event.target.value)}>
             <div><input type="radio" value="0" name="q3" />The question is not meaningful</div>
             <div><input type="radio" value="1" name="q3" />The question is meaningful but the answer is wrong</div>
@@ -98,9 +95,9 @@ function OnboardingComponent({ onSubmit }) {
         onClick={() => onSubmit({ answer: [q1Value, q2Value, q3Value] })}
         disabled={isTime||q1Value==""||q2Value==""||q3Value==""}
       >
-        Submit Answer to proceed
+        Submit
       </button>
-        </div>      
+        </section>      
         </div> 
 
     </div>
@@ -149,22 +146,14 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
       </ul>
       </div>
       </Directions>
-      <section className="section">
+      <section class="mt-2">
         <div className="container">
-          <p className="subtitle is-3 is-spaced"><strong>Topics discussed:</strong> {taskData.topic}</p>
-
+          <p className="subtitle is-4 is-spaced"><strong>Topic discussed:</strong> {taskData.topic}</p>
           <div class="columns">
-            <div class="column is-half">
-            
-              <p className="subtitle is-3 is-spaced"><strong>Meeting summary:</strong></p>
-              <div class="content"><blockquote>{taskData.abstract}</blockquote></div>
-              
-            </div>
-
-            <div class="column is-half">
-              <p className="subtitle is-3 is-spaced"><strong>Meeting section:</strong></p>
+            <div class="column is-two-thirds">
+              <p className="subtitle is-4 is-spaced"><strong>Meeting section:</strong></p>
               {taskData.turns.map(turn => (
-                <div class="context" dangerouslySetInnerHTML={{ __html: turn }} />
+                <div class="context" dangerouslySetInnerHTML={{ __html: turn.replace(taskData.answer,'<span class="has-text-black has-background-grey-lighter">'+taskData.answer+'</span>') }} />
               ))}
             </div>
           </div>
@@ -174,11 +163,11 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
           <div class='is-size-4'>
           <strong>Answer: </strong> {taskData.answer}
           </div>
-          <section className="section">
+          <section class="mt-1">
           <div onChange={(event) => setTextValue(event.target.value)}>
-            <div><input type="radio" value="0" name="rating" />The question is not meaningful</div>
-            <div><input type="radio" value="1" name="rating" />The question is meaningful but the answer is wrong</div>
-            <div><input type="radio" value="2" name="rating" />The question is meaningful and the answer is correct</div>
+            <div class='is-size-5'><input type="radio" value="0" name="rating" />The question is not meaningful</div>
+            <div class='is-size-5'><input type="radio" value="1" name="rating" />The question is meaningful but the answer is wrong</div>
+            <div class='is-size-5'><input type="radio" value="2" name="rating" />The question is meaningful and the answer is correct</div>
           </div>
           </section>
           <button
