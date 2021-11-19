@@ -18,11 +18,10 @@ function OnboardingComponent({ onSubmit }) {
     <div>
       <Directions>
       <div class="content">
-      <p className="subtitle"><strong>Task Guidelines:</strong></p>
+      <p className="subtitle"><strong>Onboarding Guidelines:</strong></p>
       <ul>
         <li>This task requires you to rate the quality of a question, answer pair about a short section of a meeting.</li>
-        <li>Imagine you are trying to find useful information from certain topics in the meeting through question answering</li>
-        <li>Read the meeting summary and secttion</li>
+        <li>Imagine you are trying to find useful information about certain topics from the meeting through Q&A</li>
         <li>First evaluate if the question is related to the meeting section and is asking for useful information</li>
         <li>Then check if the provided answer to the question is correct</li>
       </ul>
@@ -55,18 +54,18 @@ function OnboardingComponent({ onSubmit }) {
         
         <div class="column is-half">
           <p className="subtitle is-4 is-spaced">Example <strong><font color="green">GOOD</font></strong> Question from the meeting segment</p>
-          <div class="context"><strong>Question: What was the remote prototype made of? Answer: Play-Doh </strong></div>
-          <div class="context">This question is about the meeting section asking for useful information and the answer is correct </div>     
+          <div class="context"><strong>Question:</strong> What was the remote prototype made of? <strong>Answer:</strong> Play-Doh </div>
+          <div class="context"><strong>Explanation:</strong> The "remote prototype" is an important topic of the meeting.</div>     
         </div>
         <div class="column is-half">
           <p className="subtitle is-4 is-spaced">Example <strong><font color="red">BAD</font></strong> Questions from the meeting segment</p>
-          <div class="context"><strong>Question: Who said “Pretty impressive”? Answer: Marketing</strong></div>
-          <div class="context">We are looking for meaningful questions that someone might ask later to find important information discussed</div>     
+          <div class="context"><strong>Question:</strong> Who said “Pretty impressive”? <strong>Answer:</strong> Marketing</div>
+          <div class="context"><strong>Explanation:</strong> The speaker of some vague phrase is not useful for the team. </div>     
         </div>
         </div>
 
         <div class="is-divider" data-content="Test your understanding to proceed"></div>
-        <p className="subtitle is-4 is-spaced"><strong>Test your understanding to proceed to HITs</strong></p>
+        <p className="subtitle is-4 is-spaced"><strong>Try your best to rate the following QA pairs about the meeting</strong></p>
         <section class="mt-2">
           <span className="subtitle is-4 is-spaced">Q: Is the content technical? A: Yes </span>
           <div onChange={(event) => setQ2Value(event.target.value)}>
@@ -134,13 +133,13 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   return (
     <div>
       <Directions>
-      <div><strong>Instructions:</strong></div>This task requires you to ask rate question, answers about a section of a meeting transcript. Besides the section, you will also be shown the topic discussed in the meeting and summary.
+      <div><strong>Instructions:</strong></div>This task requires you to ask rate question, answers about a section of a meeting transcript. Besides the section, you will also be shown the topic discussed in the meeting.
 
       <div class="content">
       <br /> 
       <p className="subtitle"><strong>Tips to not get work <font color="red">rejected</font>:</strong></p>
       <ul>
-        <li>Read the whole summary and section first to understand the context</li>
+        <li>Read the section first to understand the context</li>
         <li>Imagine you are trying to find useful information from certain topics in the meeting.</li>
         <li>Rate the quality of the question and check if the answer is correct</li>
       </ul>
