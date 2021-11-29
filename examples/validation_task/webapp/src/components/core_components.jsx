@@ -22,7 +22,7 @@ function OnboardingComponent({ onSubmit }) {
       <ul>
         <li>This task requires you to rate the quality of a question, answer pair about a short section of a meeting.</li>
         <li>Imagine you are trying to find useful information about certain topics from the meeting through Q&A</li>
-        <li>First evaluate if the question is related to the meeting section and is asking for useful information</li>
+        <li>First evaluate if the question is related to the meeting section and is asking for useful information someone might need later</li>
         <li>Then check if the provided answer to the question is correct</li>
       </ul>
       </div>
@@ -122,7 +122,7 @@ function Directions({ children }) {
 function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
-  setTimeout(() => setIsTimeValue(false), 60000); // 45s
+  setTimeout(() => setIsTimeValue(false), 45000); // 45s
 
   if (!taskData) {
     return <LoadingScreen />;

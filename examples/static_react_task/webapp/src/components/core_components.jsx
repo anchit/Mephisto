@@ -112,7 +112,7 @@ function SimpleFrontend({ taskData, isOnboarding, onSubmit, onError }) {
   const [textValue, setTextValue] = React.useState("");
   const [answerValue, setAnswerValue] = React.useState("");
   const [isTime, setIsTimeValue] = React.useState(true);
-  setTimeout(() => setIsTimeValue(false), 60000); // 45s
+  setTimeout(() => setIsTimeValue(false), 45000); // 45s
 
   if (!taskData) {
     return <LoadingScreen />;

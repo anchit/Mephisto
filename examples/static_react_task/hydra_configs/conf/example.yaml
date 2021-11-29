@@ -8,12 +8,12 @@ mephisto:
     task_source: ${task_dir}/webapp/build/bundle.js
     extra_source_dir: ${task_dir}/webapp/src/static
     units_per_assignment: 1
-    onboarding_qualification: test-react-static-qualification
+    onboarding_qualification: qmsumqa-qualification
   task:
-    task_name: react-static-task-example
+    task_name: qmsumqa
     task_title: "Meeting question answering"
     task_description: "Inside you'll be asked to write a question and answer pair after reading a meeting segment."
-    task_reward: 0.25
+    task_reward: 0.27
     task_tags: "test,simple,button"
     data_dir: /private/home/anchit/QMSum/
-    maximum_units_per_worker: 20
+    maximum_units_per_worker: 50
